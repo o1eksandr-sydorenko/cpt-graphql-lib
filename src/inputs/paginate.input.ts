@@ -1,6 +1,6 @@
 import { IsInt, IsOptional, Max } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
-import { maxPaginateLimit } from '../config';
+import { maxPaginateLimit } from '../configs';
 
 @InputType()
 export class PaginateInput {

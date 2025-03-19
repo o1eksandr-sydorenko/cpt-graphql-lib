@@ -12,3 +12,23 @@ export const transformGraphQLFields = (fields: object): object => {
 
   return result;
 };
+
+export const cleanNestedFilterInput = <T extends object>(filter?: T): Partial<T | undefined> => {
+  if (!filter) {
+    return;
+  }
+
+  return Object.fromEntries(
+    Object.entries(filter)
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => {
+        if (Array.isArray(value)) {
+          value = value.map((item) => cleanNestedFilterInput(item));
+        } else if (typeof value === 'object') {
+          value = cleanNestedFilterInput(value);
+        }
+
+        return [key, value];
+      }),
+  ) as T;
+};
