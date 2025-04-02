@@ -23,7 +23,7 @@ export abstract class SourceService<TPrismaClient extends PrismaClient> {
     const [items, meta] = await this.prismaClient[this.model]
       .paginate({
         select: transformGraphQLFields(graphqlFields(info)['items']),
-        where: cleanNestedFilterInput<F>(filter),
+        where: cleanNestedFilterInput(filter),
         orderBy,
       })
       .withPages({
